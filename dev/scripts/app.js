@@ -103,7 +103,6 @@ import axios from 'axios';
     getEventInfo(eventResults) {
       console.log(eventResults);
       this.setState({
-        eventDate: eventResults.end.date,
         eventVenue: eventResults.venue.displayName,
         eventType: eventResults.start.type,
         eventLink: eventResults.start.uri,
@@ -127,7 +126,11 @@ import axios from 'axios';
                 this.state.eventResults.map(event => {
                   return (
                     <li key={event.id} onClick={() => this.getEventInfo(event)}>{event.displayName}
+                      {/* {this.state.showDetails ? } */}
+                      <p>{event.type}</p>
                       <p>{event.eventVenue}</p>
+                      <p>{event.location.city}</p>
+                      <a href={event.uri}>Buy Tickets</a>
                     </li>
                   )
                 })
