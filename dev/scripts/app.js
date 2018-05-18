@@ -1,32 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
-
-// import firebase from 'firebase';
-
-// FIREBASE
-// const config = {
-//   apiKey: "AIzaSyA2X46iQjmFvSKHaHpk9A2Vdvwm-zcJBvU",
-//   authDomain: "concertwishlist-131d9.firebaseapp.com",
-//   databaseURL: "https://concertwishlist-131d9.firebaseio.com",
-//   projectId: "concertwishlist-131d9",
-//   storageBucket: "",
-//   messagingSenderId: "210949514811"
-// };
-// firebase.initializeApp(config);
-
-
-// SONGKICK API
-// axios.get('', {
-//   params: {
-//     queryParam: 'value'
-//   }
-// })
-//   .then(function (res) {
-//     console.log(res);
-//   });
-
-
   
   
   class App extends React.Component {
@@ -37,16 +11,20 @@ import axios from 'axios';
         APIKEY: 'hHSjLHKTmsfByvxU',
         artistResults: [],
         eventResults: [],
+        artistImage: [],
         showArtists: false,
-        showEvents: false
-        
-
+        showEvents: false,
+        displayResults: false
       };
+
+
       this.handleSearchInputChange = this.handleSearchInputChange.bind(this);
       this.getArtist = this.getArtist.bind(this);
       this.getEvents = this.getEvents.bind(this);
       this.getEventInfo = this.getEventInfo.bind(this);
     }
+
+
 
     // Handle Search Input Function
     handleSearchInputChange(e) {
@@ -56,6 +34,7 @@ import axios from 'axios';
       })
       
     }
+
 
 
     //Get Artist Function
@@ -68,16 +47,19 @@ import axios from 'axios';
           apikey: this.state.APIKEY,
           query: this.state.searchInput
         }
+
       })
       .then((response) => {
         this.setState({
           artistResults: response.data.resultsPage.results.artist,
           showArtists: true,
-          showEvents: false
+          showEvents: false,
+          displayResults: true
         });
         console.log(this.state.artistResults);  
       });
     }
+
 
 
     // Get Events Function
@@ -92,14 +74,14 @@ import axios from 'axios';
         eventResults: response.data.resultsPage.results.event,
         showArtists: false,
         showEvents: true,
-        searchInput:''
+        searchInput:'',
       });
       console.log(this.state.eventResults);
-      
     })
     }
+    
 
-
+    // Get Events Function
     getEventInfo(eventResults) {
       console.log(eventResults);
       this.setState({
@@ -107,24 +89,45 @@ import axios from 'axios';
         eventType: eventResults.start.type,
         eventLink: eventResults.start.uri,
         showEvents: true
-      });
-  
+    });
     }
+
+
 
 
     // RENDER STARTS
     render() {
       return (
         <div>
-          <form onSubmit={this.getArtist}>
-            <input type="text" value={this.state.searchInput} onChange={this.handleSearchInputChange}/>
-            <input type="submit" />
-          </form>
+
+          {
+            this.state.displayResults === false ? (
+
+        <section className="introPage">
+          <div className="titleAndSearch">
+            <h1>Live Music Bucket List</h1>
+
+            <form onSubmit={this.getArtist}>
+              <input className="searchInput" placeholder="Choose Artist"  type="text" value={this.state.searchInput} onChange={this.handleSearchInputChange}/>
+
+              <input className="submitButton" type="submit" value="Search" />
+            </form>
+          </div>
+        </section>
+
+            ) : null}
+
+          {/* CONDITIONAL RENDER */}
+          {
+            this.state.displayResults === true ? (
+
+          <div className-="resultsPage">
           { this.state.showEvents &&
             <ul>
               {
                 this.state.eventResults.map(event => {
                   return (
+                    
                     <li key={event.id} onClick={() => this.getEventInfo(event)}>{event.displayName}
                       {/* {this.state.showDetails ? } */}
                       <p>{event.type}</p>
@@ -132,8 +135,9 @@ import axios from 'axios';
                       <p>{event.location.city}</p>
                       <a href={event.uri}>Buy Tickets</a>
                     </li>
-                  )
-                })
+
+                    )
+                    })
               }
             </ul>
           }
@@ -148,10 +152,14 @@ import axios from 'axios';
               }
             </ul>
           }
-        </div>
+          </div>
+
+           )  : null }
+
+          </div>
       )
     }
-}
+  }
 // RENDER ENDS
 
 ReactDOM.render(<App />, document.getElementById('app'));

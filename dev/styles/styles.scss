@@ -1,10 +1,65 @@
-@import "setup";
-@import "variables";
-@import "global";
-@import "typography";
-//components
-@import "components/introPage";
-@import "components/mainPage";
-@import "components/winLose";
-@import "components/feedback";
-@import "components/footer";
+@import 'components/setup.scss';
+@import 'typography.scss';
+
+.introPage {
+    background-image: url(../../images/dominic-hampton-615622-unsplash.jpg);
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    height: 100vh;
+    margin: 0 auto;
+}
+
+.titleAndSearch {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0;
+    position: absolute;
+    width: 100%;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+form {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+input.submitButton {
+    height: 40px;
+    width: 170px;
+    background: #bad;
+    border: none;
+}
+
+.searchInput {
+    height: 38px;
+    width: 170px;
+    border: none;
+    background: #bad;
+    color: black;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+
+ul {
+    list-style: none;
+    padding: 0;
+    margin-top: 50px;
+    text-align: center;
+}
+
+li {
+    margin-bottom: 50px;
+    border: 1px solid red;
+    a {
+        text-decoration: none;
+        color: black;
+        background: pink;
+        height: 40px;
+        width: 170px;
+    }
+}
