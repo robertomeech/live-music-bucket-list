@@ -12,16 +12,18 @@ import axios from 'axios';
         artistResults: [],
         eventResults: [],
         artistImage: [],
+        savedEvents: [],
         showArtists: false,
         showEvents: false,
-        displayResults: false
+        displayResults: false,
+        displaySaved: false
       };
 
 
       this.handleSearchInputChange = this.handleSearchInputChange.bind(this);
       this.getArtist = this.getArtist.bind(this);
       this.getEvents = this.getEvents.bind(this);
-      this.getEventInfo = this.getEventInfo.bind(this);
+      this.saveEvent = this.saveEvent.bind(this);
     }
 
 
@@ -32,7 +34,6 @@ import axios from 'axios';
       this.setState({
         searchInput: e.target.value
       })
-      
     }
 
 
@@ -79,19 +80,18 @@ import axios from 'axios';
       console.log(this.state.eventResults);
     })
     }
-    
+  
+    // Save Event Function
+    saveEvent(event) {
+      console.log(event);
+      let saved = this.state.savedEvents;
 
-    // Get Events Function
-    getEventInfo(eventResults) {
-      console.log(eventResults);
-      this.setState({
-        eventVenue: eventResults.venue.displayName,
-        eventType: eventResults.start.type,
-        eventLink: eventResults.start.uri,
-        showEvents: true
-    });
+      saved.push(event);
+      this.setState({ 
+        savedEvents: saved,
+        displaySaved: true
+      });
     }
-
 
 
 
@@ -115,32 +115,19 @@ import axios from 'axios';
           </div>
         </section>
 
-            ) : null}
+) : null}
 
-          {/* CONDITIONAL RENDER */}
           {
             this.state.displayResults === true ? (
-
+              
           <div className-="resultsPage">
-          { this.state.showEvents &&
-            <ul>
-              {
-                this.state.eventResults.map(event => {
-                  return (
-                    
-                    <li key={event.id} onClick={() => this.getEventInfo(event)}>{event.displayName}
-                      {/* {this.state.showDetails ? } */}
-                      <p>{event.type}</p>
-                      <p>{event.eventVenue}</p>
-                      <p>{event.location.city}</p>
-                      <a href={event.uri}>Buy Tickets</a>
-                    </li>
+            <div className="resultsHeader">
+                <form className="secondSearch" onSubmit={this.getArtist}>
+                  <input className="searchInput" placeholder="Choose Artist" type="text" value={this.state.searchInput} onChange={this.handleSearchInputChange} />
 
-                    )
-                    })
-              }
-            </ul>
-          }
+                  <input className="submitButton" type="submit" value="Search" />
+                </form>
+            </div>
           { this.state.showArtists &&
             <ul>
               {
@@ -152,6 +139,41 @@ import axios from 'axios';
               }
             </ul>
           }
+          { this.state.showEvents &&
+              
+            <div className="eventWrapper">
+              <ul>
+                {
+                  this.state.eventResults.map(event => {
+                    return (
+                      
+                      <li key={event.id}>
+                        <h3>{event.displayName}</h3>
+                        <p>{event.type}</p>
+                        <p>{event.venue.displayName}</p>
+                        <p>{event.location.city}</p>
+                        <p>{event.start.date}</p>
+                        <a href={event.uri}>Buy Tickets</a>
+                        <button onClick={() => this.saveEvent(event)}>Add to Wish List</button>
+                      </li>
+                    )
+                  })
+                }
+            </ul>
+                  <div>
+                    {this.state.savedEvents.map((myEvent, i) => {
+                      return (
+                        <div key={i} className="savedEvents">
+                          <h3>{event.displayName}</h3>
+                        </div>
+                      )
+                    })}
+                  </div>
+              <footer>
+                <p>Created by Roberto Meech&copy;</p>
+              </footer>
+           </div>
+              }
           </div>
 
            )  : null }
@@ -160,6 +182,6 @@ import axios from 'axios';
       )
     }
   }
-// RENDER ENDS
-
+  // RENDER ENDS
+  
 ReactDOM.render(<App />, document.getElementById('app'));
