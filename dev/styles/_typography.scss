@@ -1,9 +1,24 @@
 $baseFont: 'Didact Gothic', sans-serif;
 $secondaryFont: 'Arimo', sans-serif;
 
+$primaryColor: #bab6d7;
+$secondaryColor: #9f9aa4;
+
 
 h1 {
-    font-family: 'Didact Gothic';
-    font-size: 60px;
+    font-family: $baseFont;
+    font-size: 65px;
     color: white;
+    text-align: center;
+    
 }
+
+h3 {
+    color: $primaryColor;
+    font-size: 30px;
+    font-family: $baseFont;
+    text-transform: uppercase;
+    font-weight: bold;
+    margin-top: 0;
+}
+

@@ -98,14 +98,14 @@ import axios from 'axios';
     // RENDER STARTS
     render() {
       return (
-        <div>
+        <div className="wrapper">
 
           {
             this.state.displayResults === false ? (
 
         <section className="introPage">
           <div className="titleAndSearch">
-            <h1>Live Music Bucket List</h1>
+            <h1>Live Music WishList</h1>
 
             <form onSubmit={this.getArtist}>
               <input className="searchInput" placeholder="Choose Artist"  type="text" value={this.state.searchInput} onChange={this.handleSearchInputChange}/>
@@ -120,62 +120,78 @@ import axios from 'axios';
           {
             this.state.displayResults === true ? (
               
-          <div className-="resultsPage">
-            <div className="resultsHeader">
-                <form className="secondSearch" onSubmit={this.getArtist}>
+              <div className-="resultsPage">
+                <div className="resultsHeader">
+                  <form className="secondSearch" onSubmit={this.getArtist}>
                   <input className="searchInput" placeholder="Choose Artist" type="text" value={this.state.searchInput} onChange={this.handleSearchInputChange} />
 
                   <input className="submitButton" type="submit" value="Search" />
                 </form>
-            </div>
+                <h2>Live Music Wish List</h2>
+               </div>
+
           { this.state.showArtists &&
+
+          <div className="artistResults">
+          <div className="resultResults">
             <ul>
               {
                 this.state.artistResults.map(artist => {
                   return (
-                    <li key={artist.id} onClick={() => this.getEvents(artist.id)}>{artist.displayName}</li>
+                    <div className="artistListItem">
+                      <li key={artist.id} onClick={() => this.getEvents(artist.id)}><button className="artistButton"><img src="../../images/mic.png" alt=""/>{artist.displayName}</button></li>
+                    </div>
                   )
                 })
               }
             </ul>
+          </div>
+            <footer>
+              <p>&copy; 2018 Roberto Meech</p>
+            </footer>
+          </div>
           }
           { this.state.showEvents &&
               
-            <div className="eventWrapper">
+              <div className="eventWrapper">
               <ul>
                 {
                   this.state.eventResults.map(event => {
                     return (
                       
-                      <li key={event.id}>
+                      <li key={event.id} className="eventList">
                         <h3>{event.displayName}</h3>
                         <p>{event.type}</p>
                         <p>{event.venue.displayName}</p>
                         <p>{event.location.city}</p>
                         <p>{event.start.date}</p>
                         <a href={event.uri}>Buy Tickets</a>
-                        <button onClick={() => this.saveEvent(event)}>Add to Wish List</button>
+                        <button onClick={() => this.saveEvent(event)}>Add to WishList</button>
                       </li>
                     )
                   })
                 }
-            </ul>
-                  <div>
+                </ul>
+                  <div className="wishlist">
+
+                    <h2>My WishList</h2>
                     {this.state.savedEvents.map((myEvent, i) => {
+                      
                       return (
-                        <div key={i} className="savedEvents">
-                          <h3>{event.displayName}</h3>
+                        <div className="wishlistWrapper">
+                          <li key={i} className="savedEvents">
+                            <h3>{myEvent.displayName}</h3>
+                            <a href={myEvent.uri}>Tickets</a>
+                          </li>
                         </div>
                       )
                     })}
                   </div>
-              <footer>
-                <p>Created by Roberto Meech&copy;</p>
-              </footer>
+
            </div>
               }
-          </div>
 
+      </div>
            )  : null }
 
           </div>
