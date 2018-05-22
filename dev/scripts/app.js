@@ -42,7 +42,7 @@ import axios from 'axios';
       e.preventDefault();
       console.log(this.state.searchInput);
 
-      axios.get('http://api.songkick.com/api/3.0/search/artists.json',{
+      axios.get('https://api.songkick.com/api/3.0/search/artists.json',{
         params: {
           apikey: this.state.APIKEY,
           query: this.state.searchInput
@@ -64,7 +64,7 @@ import axios from 'axios';
 
     // Get Events Function
     getEvents(artistId) {
-      axios.get(`http://api.songkick.com/api/3.0/artists/${artistId}/calendar.json`, {
+      axios.get(`https://api.songkick.com/api/3.0/artists/${artistId}/calendar.json`, {
         params: {
           apikey: this.state.APIKEY
         }
