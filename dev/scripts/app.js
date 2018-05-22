@@ -15,8 +15,7 @@ import axios from 'axios';
         savedEvents: [],
         showArtists: false,
         showEvents: false,
-        displayResults: false,
-        displaySaved: false
+        displayResults: false
       };
 
 
@@ -99,23 +98,22 @@ import axios from 'axios';
     render() {
       return (
         <div className="wrapper">
-
           {
             this.state.displayResults === false ? (
 
-        <section className="introPage">
-          <div className="titleAndSearch">
-            <h1>Live Music WishList</h1>
+          <section className="introPage">
+            <div className="titleAndSearch">
+              <h1>Live Music WishList</h1>
 
-            <form onSubmit={this.getArtist}>
-              <input className="searchInput" placeholder="Choose Artist"  type="text" value={this.state.searchInput} onChange={this.handleSearchInputChange}/>
+              <form onSubmit={this.getArtist}>
+                <input className="searchInput" placeholder="Choose Artist"  type="text" value={this.state.searchInput} onChange={this.handleSearchInputChange}/>
 
-              <input className="submitButton" type="submit" value="Search" />
-            </form>
-          </div>
-        </section>
+                <input className="submitButton" type="submit" value="Search" />
+              </form>
+            </div>
+          </section>
 
-) : null}
+            ) : null }
 
           {
             this.state.displayResults === true ? (
@@ -127,25 +125,25 @@ import axios from 'axios';
 
                   <input className="submitButton" type="submit" value="Search" />
                 </form>
-                <h2>Live Music Wish List</h2>
+                <h2>Live Music WishList</h2>
                </div>
 
           { this.state.showArtists &&
 
-          <div className="artistResults">
-          <div className="resultResults">
-            <ul>
-              {
-                this.state.artistResults.map(artist => {
-                  return (
-                    <div className="artistListItem">
-                      <li key={artist.id} onClick={() => this.getEvents(artist.id)}><button className="artistButton"><img src="../../images/mic.png" alt=""/>{artist.displayName}</button></li>
-                    </div>
-                  )
-                })
-              }
-            </ul>
-          </div>
+          <div className="artistResultsWrapper">
+            <div>
+              <ul>
+                {
+                  this.state.artistResults.map(artist => {
+                    return (
+                      <div className="artistListItem">
+                        <li key={artist.id} onClick={() => this.getEvents(artist.id)}><button className="artistButton"><img src="../../images/mic.png" alt="black mic icon"/>{artist.displayName}</button></li>
+                      </div>
+                    )
+                  })
+                }
+              </ul>
+            </div>
             <footer>
               <p>&copy; 2018 Roberto Meech</p>
             </footer>
@@ -153,12 +151,11 @@ import axios from 'axios';
           }
           { this.state.showEvents &&
               
-              <div className="eventWrapper">
+            <div className="eventWrapper">
               <ul>
                 {
                   this.state.eventResults.map(event => {
                     return (
-                      
                       <li key={event.id} className="eventList">
                         <h3>{event.displayName}</h3>
                         <p>{event.type}</p>
@@ -171,30 +168,29 @@ import axios from 'axios';
                     )
                   })
                 }
-                </ul>
-                  <div className="wishlist">
+              </ul>
+                <div className="wishlist">
 
-                    <h2>My WishList</h2>
-                    {this.state.savedEvents.map((myEvent, i) => {
-                      
-                      return (
-                        <div className="wishlistWrapper">
-                          <li key={i} className="savedEvents">
-                            <h3>{myEvent.displayName}</h3>
-                            <a href={myEvent.uri}>Tickets</a>
-                          </li>
-                        </div>
-                      )
-                    })}
-                  </div>
-
-           </div>
-              }
-
-      </div>
-           )  : null }
-
+                  <h2>My WishList</h2>
+                  {this.state.savedEvents.map((myEvent, i) => {
+                    
+                    return (
+                      <div className="wishlistWrapper">
+                        <li key={i} className="savedEvents">
+                          <h3>{myEvent.displayName}</h3>
+                          <a href={myEvent.uri}>Book It Now!</a>
+                        </li>
+                      </div>
+                    )
+                  })}
+                </div>
+            </div>
+            }
           </div>
+
+           )  : null }
+           
+      </div>
       )
     }
   }

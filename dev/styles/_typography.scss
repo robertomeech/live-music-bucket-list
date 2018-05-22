@@ -10,7 +10,7 @@ h1 {
     font-size: 65px;
     color: white;
     text-align: center;
-    
+    text-shadow: 4px 4px 2px rgba(0, 0, 0, 0.7);       
 }
 
 h3 {
@@ -18,7 +18,11 @@ h3 {
     font-size: 30px;
     font-family: $baseFont;
     text-transform: uppercase;
-    font-weight: bold;
     margin-top: 0;
+    @media(max-width: 500px) {
+        font-size: 25px;
+    }
 }
+
+
 
